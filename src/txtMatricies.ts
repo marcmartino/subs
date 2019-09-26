@@ -1,20 +1,27 @@
+
+type Tuple<A, B> = [A, B];
+
+type matrixNum = number | Tuple<number, number>;
+type txtMatrix = [[matrixNum, matrixNum], [matrixNum, matrixNum]];
+
+
 const matrixNumVal = (num: matrixNum): number =>
   typeof num === "number" ? num : num[0] / num[1];
 
-export const txtDeterminant = ([anb, cnd]: txtMatrix): number => {
+export const determinant = ([anb, cnd]: txtMatrix): number => {
   const [a, b, c, d] = [...anb, ...cnd].map(matrixNumVal);
   return a * d - b * c;
 };
 
-const txtConstMult = (
+export const scalarMult = (
   cons: matrixNum,
   [[a, b], [c, d]]: txtMatrix
 ): txtMatrix => [
-  [matrixNumMult(cons, a), matrixNumMult(cons, b)],
-  [matrixNumMult(cons, c), matrixNumMult(cons, d)]
+  [numberMult(cons, a), numberMult(cons, b)],
+  [numberMult(cons, c), numberMult(cons, d)]
 ];
 
-const matrixNumMult = (x: matrixNum, y: matrixNum): matrixNum => {
+export const numberMult = (x: matrixNum, y: matrixNum): matrixNum => {
   if (typeof x === "number") {
     if (typeof y === "number") {
       return x * y;
@@ -26,29 +33,31 @@ const matrixNumMult = (x: matrixNum, y: matrixNum): matrixNum => {
       if (x[0] === 1) {
         return [y, x[1]];
       }
+    } else {
+      return [y[0] * x[0], x[1] * y[1]]
     }
   }
   return matrixNumVal(x) * matrixNumVal(y);
 };
 
-export const txtInverse = ([[a, c], [b, d]]: txtMatrix): txtMatrix => {
-  const determinant = txtDeterminant([[a, b], [c, d]]);
-  if (determinant === 0)
+export const inverse = ([[a, c], [b, d]]: txtMatrix): txtMatrix => {
+  const det = determinant([[a, b], [c, d]]);
+  if (det === 0)
     throw new Error("Determinant of 0; cannot find inverse");
-  return txtConstMult(
-    [1, determinant],
-    [[d, matrixNumMult(-1, b)], [matrixNumMult(-1, c), a]]
+  return scalarMult(
+    [1, det],
+    [[d, numberMult(-1, b)], [numberMult(-1, c), a]]
   );
 };
 
-const pairTimesTxt = (
+export const pairTimesTxt = (
   pair: Tuple<number, number>,
   [[a, b], [c, d]]: txtMatrix
 ): [number, number] => [
-  matrixNumVal(matrixNumMult(pair[0], a)) +
-    matrixNumVal(matrixNumMult(pair[1], c)),
-  matrixNumVal(matrixNumMult(pair[0], b)) +
-    matrixNumVal(matrixNumMult(pair[1], d))
+  matrixNumVal(numberMult(pair[0], a)) +
+    matrixNumVal(numberMult(pair[1], c)),
+  matrixNumVal(numberMult(pair[0], b)) +
+    matrixNumVal(numberMult(pair[1], d))
 ];
 
 export const solveSystem = (
@@ -56,5 +65,5 @@ export const solveSystem = (
   matrix: txtMatrix
 ): [number, number] => {
   //   console.log("solving a system", answers, matrix);
-  return pairTimesTxt(answers, txtInverse(matrix));
+  return pairTimesTxt(answers, inverse(matrix));
 };

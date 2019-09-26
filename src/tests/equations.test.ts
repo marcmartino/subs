@@ -4,7 +4,11 @@
     {"0":[[200,77.5,90]],"1":[["corn syrup 42 de",48,80]],"2":[["dextrose",70,190]],"3":[["sucrose",100,100]]}
     {"0":[[200,77.5,90]],"1":[["dextrose",70,190]],"2":[["sucrose",100,100]],"3":[["invert syrup",130,167]]}
 */
+import { assert } from "chai";
 
-// import assert from "assert";
-
-// assert()
+// describe('calculate', function() {
+//     it('add', function() {
+//       let result = 5 + 2;
+//       assert.equal(result, 7);
+//     }); 
+//   });
