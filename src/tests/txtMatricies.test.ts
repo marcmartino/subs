@@ -1,5 +1,10 @@
 import { assert } from "chai";
-import { determinant as det, scalarMult, inverse, pairMult } from "../txtMatricies";
+import {
+  determinant as det,
+  scalarMult,
+  inverse,
+  pairMult
+} from "../txtMatricies";
 
 type Tuple<A, B> = [A, B];
 
@@ -53,20 +58,17 @@ describe("2x2 matrix algebra", function() {
   it("should find matrix inverses", function() {
     assert.deepEqual(
       inverse(testMatrix),
-      [[[4, -2], [-2,-2]], [[-3, -2], [1, -2]]],
+      [[[4, -2], [-2, -2]], [[-3, -2], [1, -2]]],
       "basic inverse"
     );
-    console.log(JSON.stringify(inverse(testFractionMatrix)[0]))
-    console.log(JSON.stringify(inverse(testFractionMatrix)[1]))
     assert.deepEqual(
       inverse(testFractionMatrix),
-      [[-4, 2],
-      [3, -1]],
+      [[[4, -1], [-2, -1]], [[-3, -1], [1, -1]]],
       "inverse of matrix with fraction values"
     );
   });
 
-  it(" should multiply a two by one matrix by a two by two", function () {
+  it("should multiply a two by one matrix by a two by two", function() {
     assert.deepEqual(
       pairMult([1, 2], testMatrix),
       [7, 10],
@@ -74,8 +76,18 @@ describe("2x2 matrix algebra", function() {
     );
     assert.deepEqual(
       pairMult([1, 2], testFractionMatrix),
-      [[7/2], 5],
+      [3.5, 5],
+      "pair times 2x2 of fractions multiplication"
+    );
+    assert.deepEqual(
+      pairMult([[1, 2], [2, 3]], testMatrix),
+      [2.5, 11 / 3],
       "fraction pair times 2x2 multiplication"
     );
-  })
+    assert.deepEqual(
+      pairMult([[1, 2], [2, 3]], testFractionMatrix),
+      [5 / 4, 11 / 6],
+      "fraction pair times 2x2 of fractions multiplication"
+    );
+  });
 });

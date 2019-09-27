@@ -51,7 +51,7 @@ export const inverse = ([[a, b], [c, d]]: txtMatrix): txtMatrix => {
 };
 
 export const pairMult = (
-  pair: Tuple<number, number>,
+  pair: Tuple<matrixNum, matrixNum>,
   [[a, b], [c, d]]: txtMatrix
 ): [number, number] => [
   matrixNumVal(numberMult(pair[0], a)) +
