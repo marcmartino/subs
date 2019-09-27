@@ -53,12 +53,15 @@ describe("2x2 matrix algebra", function() {
   it("should find matrix inverses", function() {
     assert.deepEqual(
       inverse(testMatrix),
-      [[-2, 1], [[3, 2], [-1, 2]]],
+      [[[4, -2], [-2,-2]], [[-3, -2], [1, -2]]],
       "basic inverse"
     );
+    console.log(JSON.stringify(inverse(testFractionMatrix)[0]))
+    console.log(JSON.stringify(inverse(testFractionMatrix)[1]))
     assert.deepEqual(
       inverse(testFractionMatrix),
-      [[-4, 2], [3, -1]],
+      [[-4, 2],
+      [3, -1]],
       "inverse of matrix with fraction values"
     );
   });

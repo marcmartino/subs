@@ -40,7 +40,7 @@ export const numberMult = (x: matrixNum, y: matrixNum): matrixNum => {
   return matrixNumVal(x) * matrixNumVal(y);
 };
 
-export const inverse = ([[a, c], [b, d]]: txtMatrix): txtMatrix => {
+export const inverse = ([[a, b], [c, d]]: txtMatrix): txtMatrix => {
   const det = determinant([[a, b], [c, d]]);
   if (det === 0)
     throw new Error("Determinant of 0; cannot find inverse");
