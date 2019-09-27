@@ -3,7 +3,9 @@ import {
   determinant as det,
   scalarMult,
   inverse,
-  pairMult
+  pairTimesTxt,
+  txtTimesPair,
+  solveSystem
 } from "../txtMatricies";
 
 type Tuple<A, B> = [A, B];
@@ -68,26 +70,57 @@ describe("2x2 matrix algebra", function() {
     );
   });
 
-  it("should multiply a two by one matrix by a two by two", function() {
+  it("should multiply a 2x1 matrix by a 2x2", function() {
     assert.deepEqual(
-      pairMult([1, 2], testMatrix),
+      pairTimesTxt([1, 2], testMatrix),
       [7, 10],
       "basic pair times 2x2 multiplication"
     );
     assert.deepEqual(
-      pairMult([1, 2], testFractionMatrix),
+      pairTimesTxt([1, 2], testFractionMatrix),
       [3.5, 5],
       "pair times 2x2 of fractions multiplication"
     );
     assert.deepEqual(
-      pairMult([[1, 2], [2, 3]], testMatrix),
+      pairTimesTxt([[1, 2], [2, 3]], testMatrix),
       [2.5, 11 / 3],
       "fraction pair times 2x2 multiplication"
     );
     assert.deepEqual(
-      pairMult([[1, 2], [2, 3]], testFractionMatrix),
+      pairTimesTxt([[1, 2], [2, 3]], testFractionMatrix),
       [5 / 4, 11 / 6],
       "fraction pair times 2x2 of fractions multiplication"
+    );
+  });
+
+  it("should multiply a 2x2 matrix by a 2x1", function() {
+    assert.deepEqual(
+      txtTimesPair(testMatrix, [1, 2]),
+      [5, 11],
+      "basic pair times 2x2 multiplication"
+    );
+    assert.deepEqual(
+      txtTimesPair(testFractionMatrix, [1, 2]),
+      [5 / 2, 11 / 2],
+      "pair times 2x2 of fractions multiplication"
+    );
+    assert.deepEqual(
+      txtTimesPair(testMatrix, [[1, 2], [1, 2]]),
+      [3 / 2, 7 / 2],
+      "fraction pair times 2x2 multiplication"
+    );
+    assert.deepEqual(
+      txtTimesPair(testFractionMatrix, [[1, 2], [1, 2]]),
+      [3 / 4, 7 / 4],
+      "fraction pair times 2x2 of fractions multiplication"
+    );
+  });
+
+  it("should solve two by two systems", function() {
+    assert.deepEqual(
+      solveSystem([10, 3], testMatrix),
+      [-17, 27 / 2],
+      "basic numeric system of equations"
     );
   });
 });

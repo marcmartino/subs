@@ -1,9 +1,7 @@
-
 type Tuple<A, B> = [A, B];
 
 type matrixNum = number | Tuple<number, number>;
 type txtMatrix = [[matrixNum, matrixNum], [matrixNum, matrixNum]];
-
 
 const matrixNumVal = (num: matrixNum): number =>
   typeof num === "number" ? num : num[0] / num[1];
@@ -34,7 +32,7 @@ export const numberMult = (x: matrixNum, y: matrixNum): matrixNum => {
         return [y, x[1]];
       }
     } else {
-      return [y[0] * x[0], x[1] * y[1]]
+      return [y[0] * x[0], x[1] * y[1]];
     }
   }
   return matrixNumVal(x) * matrixNumVal(y);
@@ -42,28 +40,29 @@ export const numberMult = (x: matrixNum, y: matrixNum): matrixNum => {
 
 export const inverse = ([[a, b], [c, d]]: txtMatrix): txtMatrix => {
   const det = determinant([[a, b], [c, d]]);
-  if (det === 0)
-    throw new Error("Determinant of 0; cannot find inverse");
-  return scalarMult(
-    [1, det],
-    [[d, numberMult(-1, b)], [numberMult(-1, c), a]]
-  );
+  if (det === 0) throw new Error("Determinant of 0; cannot find inverse");
+  return scalarMult([1, det], [[d, numberMult(-1, b)], [numberMult(-1, c), a]]);
 };
 
-export const pairMult = (
+export const pairTimesTxt = (
   pair: Tuple<matrixNum, matrixNum>,
   [[a, b], [c, d]]: txtMatrix
-): [number, number] => [
-  matrixNumVal(numberMult(pair[0], a)) +
-    matrixNumVal(numberMult(pair[1], c)),
-  matrixNumVal(numberMult(pair[0], b)) +
-    matrixNumVal(numberMult(pair[1], d))
+): Tuple<number, number> => [
+  matrixNumVal(numberMult(pair[0], a)) + matrixNumVal(numberMult(pair[1], c)),
+  matrixNumVal(numberMult(pair[0], b)) + matrixNumVal(numberMult(pair[1], d))
+];
+
+export const txtTimesPair = (
+  [[a, b], [c, d]]: txtMatrix,
+  pair: Tuple<matrixNum, matrixNum>
+): Tuple<number, number> => [
+  matrixNumVal(numberMult(pair[0], a)) + matrixNumVal(numberMult(pair[1], b)),
+  matrixNumVal(numberMult(pair[0], c)) + matrixNumVal(numberMult(pair[1], d))
 ];
 
 export const solveSystem = (
   answers: Tuple<number, number>,
   matrix: txtMatrix
-): [number, number] => {
-  //   console.log("solving a system", answers, matrix);
-  return pairMult(answers, inverse(matrix));
+) => {
+  return txtTimesPair(inverse(matrix), answers);
 };

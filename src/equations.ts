@@ -20,6 +20,9 @@ export const calculateSubstitutionOptions = (
   return solveForMaximumAtHead(totalMass, answers, eqs);
 };
 
+const isInvalidSolution = (maximum: number) => (x: number) =>
+  x < 0 || x > maximum || parseFloat(x.toFixed(4)) !== x;
+
 export const solveForMaximumAtHead = (
   maximum: number,
   answers: Tuple<number, number>,
@@ -54,9 +57,7 @@ export const solveForMaximumAtHead = (
     );
     console.log("solved system calculated", solvedSystem);
     const roundedSolvedSystem = solvedSystem.map(x => parseFloat(x.toFixed(6)));
-    return roundedSolvedSystem.filter(
-      x => x < 0 || x > maximum || parseFloat(x.toFixed(4)) !== x
-    ).length === 0
+    return roundedSolvedSystem.filter(isInvalidSolution(maximum)).length === 0
       ? [maximum, ...roundedSolvedSystem]
       : maximum >= 0
       ? solveForMaximumAtHead(maximum - 0.5, answers, eqs)
