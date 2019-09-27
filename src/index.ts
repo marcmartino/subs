@@ -12,12 +12,8 @@ function SACCHARIDESUB(
     [targetPAC, subs.map(thrd)]
   );
   return calculatedOptions
-    ? calculatedOptions.reduce(
-        (namedOptions, calcQty, i): string[] => [
-          ...namedOptions,
-          `${subs[i][0]} - ${calcQty * targetQty}`
-        ],
-        []
-      )
+    ? calculatedOptions.reduce((namedOptions, calcQty, i): string[] => {
+        return [...namedOptions, `${subs[i][0]} - ${calcQty * targetQty}`];
+      }, [])
     : ["No Substitutions Found"];
 }

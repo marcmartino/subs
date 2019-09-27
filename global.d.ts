@@ -7,6 +7,5 @@ type sumProduct = weight[];
 type equation = Tuple<weight, sumProduct>;
 type subOption = Triple<string, number, number>;
 
-
 type matrixNum = number | Tuple<number, number>;
 type txtMatrix = [[matrixNum, matrixNum], [matrixNum, matrixNum]];
