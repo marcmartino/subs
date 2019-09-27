@@ -50,7 +50,7 @@ export const inverse = ([[a, b], [c, d]]: txtMatrix): txtMatrix => {
   );
 };
 
-export const pairTimesTxt = (
+export const pairMult = (
   pair: Tuple<number, number>,
   [[a, b], [c, d]]: txtMatrix
 ): [number, number] => [
@@ -65,5 +65,5 @@ export const solveSystem = (
   matrix: txtMatrix
 ): [number, number] => {
   //   console.log("solving a system", answers, matrix);
-  return pairTimesTxt(answers, inverse(matrix));
+  return pairMult(answers, inverse(matrix));
 };

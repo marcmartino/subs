@@ -1,5 +1,5 @@
 import { assert } from "chai";
-import { determinant as det, scalarMult, inverse } from "../txtMatricies";
+import { determinant as det, scalarMult, inverse, pairMult } from "../txtMatricies";
 
 type Tuple<A, B> = [A, B];
 
@@ -65,4 +65,17 @@ describe("2x2 matrix algebra", function() {
       "inverse of matrix with fraction values"
     );
   });
+
+  it(" should multiply a two by one matrix by a two by two", function () {
+    assert.deepEqual(
+      pairMult([1, 2], testMatrix),
+      [7, 10],
+      "basic pair times 2x2 multiplication"
+    );
+    assert.deepEqual(
+      pairMult([1, 2], testFractionMatrix),
+      [[7/2], 5],
+      "fraction pair times 2x2 multiplication"
+    );
+  })
 });
