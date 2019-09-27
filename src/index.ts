@@ -4,7 +4,7 @@ import { calculateSubstitutionOptions } from "./equations";
 function SACCHARIDESUB(
   [[targetQty, targetPOD, targetPAC]]: [Triple<number, number, number>],
   ...substitutionOptions: subOption[][]
-) {
+): string[] {
   const subs: subOption[] = [].concat(...substitutionOptions);
   const calculatedOptions = calculateSubstitutionOptions(
     targetQty,
@@ -13,11 +13,11 @@ function SACCHARIDESUB(
   );
   return calculatedOptions
     ? calculatedOptions.reduce(
-        (namedOptions, calcQty, i) => [
+        (namedOptions, calcQty, i): string[] => [
           ...namedOptions,
           `${subs[i][0]} - ${calcQty * targetQty}`
         ],
         []
       )
-    : "No Substitutions Found";
+    : ["No Substitutions Found"];
 }
