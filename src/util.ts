@@ -1,3 +1,7 @@
+type Tuple<A, B> = [A, B];
+type Triple<A, B, C> = [A, B, C];
+type anyTriple = Triple<any, any, any>;
+
 export const frst = (triple: anyTriple) => triple[0];
 export const snd = (triple: anyTriple) => triple[1];
 export const thrd = (triple: anyTriple) => triple[2];

@@ -1,3 +1,12 @@
+type Tuple<A, B> = [A, B];
+type Triple<A, B, C> = [A, B, C];
+type anyTriple = Triple<any, any, any>;
+
+type weight = number;
+type sumProduct = weight[];
+type equation = Tuple<weight, sumProduct>;
+type subOption = Triple<string, number, number>;
+
 import { solveSystem } from "./txtMatricies";
 import { tail } from "./util";
 
@@ -20,8 +29,8 @@ export const calculateSubstitutionOptions = (
   return solveForMaximumAtHead(totalMass, answers, eqs);
 };
 
-const isInvalidSolution = (maximum: number) => (x: number) =>
-  x < 0 || x > maximum || parseFloat(x.toFixed(4)) !== x;
+export const isInvalidSolution = (maximum: number) => (x: number) =>
+  x < 0 || x > maximum || parseFloat(x.toFixed(5)) !== x;
 
 export const solveForMaximumAtHead = (
   maximum: number,
@@ -53,19 +62,18 @@ export const solveForMaximumAtHead = (
   try {
     const solvedSystem = solveSystem(
       [firstKnowns, secondKnowns],
-      [firstUnknowns, secondUnknowns]
+      [
+        firstUnknowns as Tuple<number, number>,
+        secondUnknowns as Tuple<number, number>
+      ]
     );
     console.log("solved system calculated", solvedSystem);
     const roundedSolvedSystem = solvedSystem.map(x => parseFloat(x.toFixed(6)));
     return roundedSolvedSystem.filter(isInvalidSolution(maximum)).length === 0
       ? [maximum, ...roundedSolvedSystem]
-      : maximum >= 0
-      ? solveForMaximumAtHead(maximum - 0.5, answers, eqs)
       : false;
   } catch (error) {
-    console.log("solve system catch");
-    return maximum >= 0
-      ? solveForMaximumAtHead(maximum - 0.5, answers, eqs)
-      : false;
+    console.log("solve system catch " + maximum, error);
+    return false;
   }
 };
