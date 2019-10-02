@@ -32,17 +32,17 @@ describe("solving for a possible substitution", function() {
       [1, 2, 3],
       "simple brute force option substitution"
     );
-  //   assert.deepEqual(
-  //     solve(5, [10, 16], [[2, 1, 2], [3, 2, 3]]),
-  //     [3, 2, 1],
-  //     "emphesize the first value and not come up with [1, 2, 3]"
-  //   );
-  // });
-  // it("should brute force a the first two values and calculate the others for substitutions", function() {
-  //   assert.deepEqual(
-  //     solve(5, [12, 20], [[1, 2, 3, 4], [3, 1, 3, 1]]),
-  //     [5, 2, 1, 0],
-  //     "multiple brute forced values"
-  //   );
-  // });
+    assert.deepEqual(
+      solve(5, [10, 16], [[2, 1, 2], [3, 2, 3]]),
+      [4, 2, 0],
+      "emphesize the first value and not come up with [1, 2, 3]"
+    );
+  });
+  it("should brute force a the first two values and calculate the others for substitutions", function() {
+    assert.deepEqual(
+      solve(5, [12, 20], [[1, 2, 3, 4], [3, 1, 3, 1]]),
+      [5, 2, 1, 0],
+      "multiple brute forced values"
+    );
+  });
 });

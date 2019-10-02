@@ -42,7 +42,7 @@ export const solveForMaximumAtHead = (
 
   const firstUnknowns = tail(eqs[0]);
   const secondUnknowns = tail(eqs[1]);
-  if (tail(eqs[0]).length > 2) {
+  if (tail(eqs[0]).length >= 2) {
     const childEqVals = solveForMaximumAtHead(
       200,
       [firstKnowns, secondKnowns],
