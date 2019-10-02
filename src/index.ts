@@ -5,14 +5,14 @@ function SACCHARIDESUB(
   [[targetQty, targetPOD, targetPAC]]: [Triple<number, number, number>],
   ...substitutionOptions: subOption[][]
 ): string[] {
-  const subs: subOption[] = [].concat(...substitutionOptions);
+  const subs: subOption[] = substitutionOptions.reduce((subsList, someSubs) => [...subsList, ...someSubs], []);
   const calculatedOptions = calculateSubstitutionOptions(
     targetQty,
     [targetPOD, subs.map(snd)],
     [targetPAC, subs.map(thrd)]
   );
   return calculatedOptions
-    ? calculatedOptions.reduce((namedOptions, calcQty, i): string[] => {
+    ? calculatedOptions.reduce((namedOptions: string[], calcQty, i): string[] => {
         return [...namedOptions, `${subs[i][0]} - ${calcQty * targetQty}`];
       }, [])
     : ["No Substitutions Found"];
