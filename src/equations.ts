@@ -60,17 +60,14 @@ export const solveForMaximumAtHead = (
     }
   }
   try {
-    const solvedSystem = solveSystem(
-      [firstKnowns, secondKnowns],
-      [
-        firstUnknowns as Tuple<number, number>,
-        secondUnknowns as Tuple<number, number>
-      ]
-    );
+    const solvedSystem = solveSystem(answers, [
+      eqs[0] as Tuple<number, number>,
+      eqs[1] as Tuple<number, number>
+    ]);
     console.log("solved system calculated", solvedSystem);
     const roundedSolvedSystem = solvedSystem.map(x => parseFloat(x.toFixed(6)));
     return roundedSolvedSystem.filter(isInvalidSolution(maximum)).length === 0
-      ? [maximum, ...roundedSolvedSystem]
+      ? roundedSolvedSystem
       : false;
   } catch (error) {
     console.log("solve system catch " + maximum, error);

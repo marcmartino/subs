@@ -122,5 +122,10 @@ describe("2x2 matrix algebra", function() {
       [-17, 27 / 2],
       "basic numeric system of equations"
     );
+    assert.deepEqual(
+      solveSystem([15, 20], [[10, 0], [5, 20]]),
+      [3 / 2, 5 / 8],
+      "simple system that's also tested in equation unit tests"
+    );
   });
 });
