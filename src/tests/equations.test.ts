@@ -30,11 +30,30 @@ describe("solving for a possible substitution", function() {
       "non-repeating decimal should be false"
     );
   });
-  it("should emphasize the first value", function() {
+  it("should calculate very simple substitutions", function() {
     assert.deepEqual(
       solve(60, [15, 20], [[10, 0], [5, 20]]),
-      [7, 10],
+      [3 / 2, 5 / 8],
       "simple substitution"
+    );
+  });
+  it("should brute force a the first value and calculate the others for substitutions", function() {
+    assert.deepEqual(
+      solve(20, [14, 17], [[1, 2, 3], [0, 7, 1]]),
+      [1, 2, 3],
+      "simple brute force option substitution"
+    );
+    assert.deepEqual(
+      solve(5, [10, 16], [[2, 1, 2], [3, 2, 3]]),
+      [3, 2, 1],
+      "emphesize the first value and not come up with [1, 2, 3]"
+    );
+  });
+  it("should brute force a the first two values and calculate the others for substitutions", function() {
+    assert.deepEqual(
+      solve(5, [12, 20], [[1, 2, 3, 4], [3, 1, 3, 1]]),
+      [5, 2, 1, 0],
+      "multiple brute forced values"
     );
   });
 });
