@@ -1,6 +1,7 @@
 import {
   solveForMaximumAtHead as solve,
-  isInvalidSolution
+  isInvalidSolution,
+  startMax
 } from "../equations";
 import { assert } from "chai";
 
@@ -19,6 +20,15 @@ describe("solving for a possible substitution", function () {
       "non-repeating decimal should be false"
     );
   });
+
+  it("should find appropriate variable maximums", function () {
+    assert.equal(
+      startMax(105, 1)([85, 145], [70, 50]),
+      121,
+      "simple integer maximum"
+    )
+  });
+
   it("should calculate very simple substitutions", function () {
     assert.deepEqual(
       solve(15, [15, 20], [[10, 0], [5, 20]]),

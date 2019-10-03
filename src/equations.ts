@@ -8,7 +8,7 @@ type equation = Tuple<weight, sumProduct>;
 type subOption = Triple<string, number, number>;
 
 import { solveSystem } from "./txtMatricies";
-import { tail } from "./util";
+import { tail, numericInverse, precision } from "./util";
 
 const combineEqs = (
   [equal1, val1s]: equation,
@@ -32,6 +32,20 @@ export const calculateSubstitutionOptions = (
 
 export const isInvalidSolution = (maximum: number) => (x: number) =>
   x < 0 || x > maximum || parseFloat(x.toFixed(5)) !== x;
+
+const roundToNearestStep = (step: number, x: number) => {
+  const inv = numericInverse(step);
+  return parseFloat((Math.round(x * inv) / inv).toFixed(precision(x)));
+}
+
+export const startMax = (base: number, step: number) => (
+  answers: Tuple<number, number>,
+  coeffs: Tuple<number, number>
+) => 
+  roundToNearestStep(step, Math.min(
+    (answers[0] / coeffs[0]) * base,
+    (answers[1] / coeffs[1]) * base
+  ));
 
 export const solveForMaximumAtHead = (
   maximum: number,
