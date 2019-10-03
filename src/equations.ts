@@ -27,7 +27,13 @@ export const calculateSubstitutionOptions = (
   // assumed that oth equations are sum products
   const [answers, eqs] = combineEqs(pod, pac);
 
-  return solveForMaximumAtHead(totalMass, answers, eqs, step);
+  return solveForMaximumAtHead(
+    totalMass,
+    answers,
+    eqs,
+    step,
+    startMax(totalMass, step)
+  );
 };
 
 export const isInvalidSolution = (maximum: number) => (x: number) =>
@@ -36,22 +42,26 @@ export const isInvalidSolution = (maximum: number) => (x: number) =>
 const roundToNearestStep = (step: number, x: number) => {
   const inv = numericInverse(step);
   return parseFloat((Math.round(x * inv) / inv).toFixed(precision(x)));
-}
+};
 
 export const startMax = (base: number, step: number) => (
   answers: Tuple<number, number>,
   coeffs: Tuple<number, number>
-) => 
-  roundToNearestStep(step, Math.min(
-    (answers[0] / coeffs[0]) * base,
-    (answers[1] / coeffs[1]) * base
-  ));
+) =>
+  roundToNearestStep(
+    step,
+    Math.min((answers[0] / coeffs[0]) * base, (answers[1] / coeffs[1]) * base)
+  );
 
 export const solveForMaximumAtHead = (
   maximum: number,
   answers: Tuple<number, number>,
   eqs: Tuple<number[], number[]>,
-  step: number = 1
+  step: number = 1,
+  newMax: (
+    answers: Tuple<number, number>,
+    coeffs: Tuple<number, number>
+  ) => number = startMax(maximum, step)
 ): number[] | false => {
   const firstKnowns = answers[0] - eqs[0][0] * maximum;
   const secondKnowns = answers[1] - eqs[1][0] * maximum;
@@ -60,18 +70,21 @@ export const solveForMaximumAtHead = (
   const secondUnknowns = tail(eqs[1]);
   if (tail(eqs[0]).length >= 2) {
     const childEqVals = solveForMaximumAtHead(
-      200,
+      newMax(
+        [firstKnowns, secondKnowns],
+        [firstUnknowns[0], secondUnknowns[0]]
+      ),
       [firstKnowns, secondKnowns],
-      [firstUnknowns, secondUnknowns]
+      [firstUnknowns, secondUnknowns],
+      step,
+      newMax
     );
 
     if (childEqVals) {
-      console.log("found a working maxima", [maximum, ...childEqVals]);
       return [maximum, ...childEqVals];
     } else {
-      console.log(" maxima was non working");
       return maximum > 0
-        ? solveForMaximumAtHead(maximum - step, answers, eqs)
+        ? solveForMaximumAtHead(maximum - step, answers, eqs, step, newMax)
         : false;
     }
   }
@@ -80,7 +93,6 @@ export const solveForMaximumAtHead = (
       eqs[0] as Tuple<number, number>,
       eqs[1] as Tuple<number, number>
     ]);
-    console.log("solved system calculated", solvedSystem);
     const roundedSolvedSystem = solvedSystem.map(x => parseFloat(x.toFixed(6)));
     return roundedSolvedSystem.filter(isInvalidSolution(maximum)).length === 0
       ? roundedSolvedSystem
