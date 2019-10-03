@@ -5,8 +5,8 @@ import {
 } from "../equations";
 import { assert } from "chai";
 
-describe("solving for a possible substitution", function () {
-  it("should exclude invalid values", function () {
+describe("solving for a possible substitution", function() {
+  it("should exclude invalid values", function() {
     assert.isFalse(isInvalidSolution(100)(100), "maximum should be valid");
     assert.isFalse(isInvalidSolution(100)(0), "minimum should be valid");
     assert.isTrue(isInvalidSolution(100)(101), "over maximum should be true");
@@ -21,22 +21,27 @@ describe("solving for a possible substitution", function () {
     );
   });
 
-  it("should find appropriate variable maximums", function () {
+  it("should find appropriate variable maximums", function() {
     assert.equal(
       startMax(105, 1)([85, 145], [70, 50]),
-      121,
+      127,
       "simple integer maximum"
-    )
+    );
+    assert.equal(
+      startMax(111, .25)([85, 105], [70, 50]),
+      134.75,
+      "maximum rounded to the quarter"
+    );
   });
 
-  it("should calculate very simple substitutions", function () {
+  it("should calculate very simple substitutions", function() {
     assert.deepEqual(
       solve(15, [15, 20], [[10, 0], [5, 20]]),
       [3 / 2, 5 / 8],
       "simple substitution"
     );
   });
-  it("should brute force a the first value and calculate the others for substitutions", function () {
+  it("should brute force a the first value and calculate the others for substitutions", function() {
     assert.deepEqual(
       solve(20, [14, 17], [[1, 2, 3], [0, 7, 1]]),
       [1, 2, 3],
@@ -48,7 +53,7 @@ describe("solving for a possible substitution", function () {
       "emphesize the first value and not come up with [1, 2, 3]"
     );
   });
-  it("should brute force a the first two values and calculate the others for substitutions", function () {
+  it("should brute force a the first two values and calculate the others for substitutions", function() {
     assert.deepEqual(
       solve(5, [12, 20], [[1, 2, 3, 4], [3, 1, 3, 1]]),
       [5, 2, 1, 0],
@@ -58,6 +63,6 @@ describe("solving for a possible substitution", function () {
       solve(105, [120, 190], [[130, 42, 100], [167, 72, 100]]),
       false,
       "should solve with positive volumes"
-    )
+    );
   });
 });
