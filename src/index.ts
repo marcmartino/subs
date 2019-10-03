@@ -13,7 +13,7 @@ function SACCHARIDESUB(
   );
   return calculatedOptions
     ? calculatedOptions.reduce((namedOptions: string[], calcQty, i): string[] => {
-        return [...namedOptions, `${subs[i][0]} - ${calcQty * targetQty}`];
+        return [...namedOptions, `${subs[i][0]}: ${calcQty * targetQty}`];
       }, [])
     : ["No Substitutions Found"];
 }

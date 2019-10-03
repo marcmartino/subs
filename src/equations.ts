@@ -21,12 +21,13 @@ const combineEqs = (
 export const calculateSubstitutionOptions = (
   totalMass: weight,
   pod: equation,
-  pac: equation
+  pac: equation,
+  step: number = 1
 ) => {
   // assumed that oth equations are sum products
   const [answers, eqs] = combineEqs(pod, pac);
 
-  return solveForMaximumAtHead(totalMass, answers, eqs);
+  return solveForMaximumAtHead(totalMass, answers, eqs, step);
 };
 
 export const isInvalidSolution = (maximum: number) => (x: number) =>
@@ -35,7 +36,8 @@ export const isInvalidSolution = (maximum: number) => (x: number) =>
 export const solveForMaximumAtHead = (
   maximum: number,
   answers: Tuple<number, number>,
-  eqs: Tuple<number[], number[]>
+  eqs: Tuple<number[], number[]>,
+  step: number = 1
 ): number[] | false => {
   const firstKnowns = answers[0] - eqs[0][0] * maximum;
   const secondKnowns = answers[1] - eqs[1][0] * maximum;
@@ -54,8 +56,8 @@ export const solveForMaximumAtHead = (
       return [maximum, ...childEqVals];
     } else {
       console.log(" maxima was non working");
-      return maximum >= 0
-        ? solveForMaximumAtHead(maximum - 0.5, answers, eqs)
+      return maximum > 0
+        ? solveForMaximumAtHead(maximum - step, answers, eqs)
         : false;
     }
   }
