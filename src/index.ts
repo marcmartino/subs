@@ -44,6 +44,21 @@ function SACCHARIDESUBQUARTER(
     ? calculatedOptions.reduce(formatReturnList(subs, targetQty), [])
     : ["No Substitutions Found"];
 }
+function SACCHARIDESUBTENTHS(
+  [[targetQty, targetPOD, targetPAC]]: [Triple<number, number, number>],
+  ...substitutionOptions: subOption[][]
+): string[] {
+  const subs: subOption[] = substitutionOptions.reduce(flattenList, []);
+  const calculatedOptions = calculateSubstitutionOptions(
+    targetQty,
+    [targetPOD, subs.map(snd)],
+    [targetPAC, subs.map(thrd)],
+    0.1
+  );
+  return calculatedOptions
+    ? calculatedOptions.reduce(formatReturnList(subs, targetQty), [])
+    : ["No Substitutions Found"];
+}
 
 //@ts-ignore
 window.SACCHARIDESUB = SACCHARIDESUB;
