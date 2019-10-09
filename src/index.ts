@@ -1,7 +1,16 @@
+type Tuple<A, B> = [A, B];
+type Triple<A, B, C> = [A, B, C];
+type anyTriple = Triple<any, any, any>;
+
+type weight = number;
+type sumProduct = weight[];
+type equation = Tuple<weight, sumProduct>;
+type subOption = Triple<string, number, number>;
+
 import { snd, thrd } from "./util";
 import { listPermutations } from "./permutations";
 import { calculateSubstitutionOptions } from "./equations";
-import { flatten } from "./util";
+import { flatten, fromEntries } from "./util";
 
 const formatReturnList = (subs: subOption[], targetQty: number) => (
   namedOptions: string[],
@@ -37,7 +46,7 @@ function saccSub(
  * @return {string[]} either a list representing the found substitution, or a single that says no substitutions found
  * @customfunction
  */
-function SACCHARIDEPAIRSTABLE(
+export function SACCHARIDEPAIRSTABLE(
   targets: [Triple<number, number, number>],
   substitutions: subOption[]
 ) {
@@ -51,12 +60,15 @@ function SACCHARIDEPAIRSTABLE(
     }),
     {}
   );
-  return listPermutations(2, Object.keys(subOptions)).map(([subName1, subName2]) =>
-    SACCHARIDESUBTENTHS(targets, [
-      [subName1, ...subOptions[subName1]] as subOption,
-      [subName2, ...subOptions[subName2]] as subOption
-    ])
-  ).map((sub, i) => [substitutions[i][0], sub]);
+  const subsCollection = fromEntries(listPermutations(2, Object.keys(subOptions))
+    .map(([subName1, subName2]) =>
+      SACCHARIDESUBTENTHS(targets, [
+        [subName1, ...subOptions[subName1]] as subOption,
+        [subName2, ...subOptions[subName2]] as subOption
+      ])
+    )
+    .filter(sub => sub[0] !== "No Substitutions Found"));
+    return subsCollection.map((sub, i) => [substitutions[i][0], sub]);
 }
 
 /**
@@ -105,4 +117,4 @@ function SACCHARIDESUBHUNDRETHS(
 }
 
 //@ts-ignore
-window.SACCHARIDEPAIRSTABLE = SACCHARIDEPAIRSTABLE
+// window.SACCHARIDEPAIRSTABLE = SACCHARIDEPAIRSTABLE;

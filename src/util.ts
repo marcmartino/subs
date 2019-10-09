@@ -16,6 +16,8 @@ export const flatten = <T>(xs: T[][]) =>
     (flattenedXs: T[], innerXs: T[]) => [...flattenedXs, ...innerXs],
     []
   );
-
 export const flatMap = <T, U>(xs: T[], func: (x: T) => U[]): U[] =>
   flatten(xs.map(func));
+
+export const fromEntries = <T>(xs: [string, ][]) =>
+  xs.reduce((obj, [prop, ...val]) => ({ ...obj, [prop]: val }));
