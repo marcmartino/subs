@@ -51,8 +51,7 @@ function SACCHARIDEPAIRSTABLE(
     }),
     {}
   );
-  const subPermutations = listPermutations(2, Object.keys(subOptions));
-  return subPermutations.map(([subName1, subName2]) =>
+  return listPermutations(2, Object.keys(subOptions)).map(([subName1, subName2]) =>
     SACCHARIDESUBTENTHS(targets, [
       [subName1, ...subOptions[subName1]] as subOption,
       [subName2, ...subOptions[subName2]] as subOption
@@ -104,3 +103,6 @@ function SACCHARIDESUBHUNDRETHS(
 ): string[] {
   return saccSub(0.01, targets, substitutionOptions);
 }
+
+//@ts-ignore
+window.SACCHARIDEPAIRSTABLE = SACCHARIDEPAIRSTABLE

@@ -1,9 +1,6 @@
 export const listPermutations = <T>(len: number, options: T[]): T[][] => {
   let perms: T[][] = [];
 
-  // if (len === 1) {
-  //   return options.map(x => [x]);
-  // }
   if (len > 2) {
     const permXs = options;
     const permYs = listPermutations(len - 1, options);
