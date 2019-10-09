@@ -9,4 +9,13 @@ export const head = <T>(arr: T[]) => (arr.length ? arr[0] : []);
 export const tail = <T>(arr: T[]) => arr.slice(1);
 export const precision = (x: number) => ((x + "").split(".")[1] || []).length;
 export const numericInverse = (x: number) =>
-  Math.pow(10,precision(x)) / (x * Math.pow(10, precision(x)));
+  Math.pow(10, precision(x)) / (x * Math.pow(10, precision(x)));
+
+export const flatten = <T>(xs: T[][]) =>
+  xs.reduce(
+    (flattenedXs: T[], innerXs: T[]) => [...flattenedXs, ...innerXs],
+    []
+  );
+
+export const flatMap = <T, U>(xs: T[], func: (x: T) => U[]): U[] =>
+  flatten(xs.map(func));

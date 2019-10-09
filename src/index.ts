@@ -1,6 +1,7 @@
 import { snd, thrd } from "./util";
 import { listPermutations } from "./permutations";
 import { calculateSubstitutionOptions } from "./equations";
+import { flatten } from "./util";
 
 const formatReturnList = (subs: subOption[], targetQty: number) => (
   namedOptions: string[],
@@ -21,7 +22,7 @@ function saccSub(
   [[targetQty, targetPOD, targetPAC]]: [Triple<number, number, number>],
   substitutionOptions: subOption[][]
 ): string[] {
-  const subs: subOption[] = substitutionOptions.reduce(flattenList, []);
+  const subs: subOption[] = flatten(substitutionOptions);
   const calculatedOptions = calculateSubstitutionOptions(
     targetQty,
     [targetPOD, subs.map(snd)],
