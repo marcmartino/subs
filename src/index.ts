@@ -12,11 +12,6 @@ const formatReturnList = (subs: subOption[], targetQty: number) => (
   `${subs[i][0]}: ${parseFloat((calcQty * targetQty).toFixed(2))}`
 ];
 
-const flattenList = <T>(subsList: T[], someSubs: T[]) => [
-  ...subsList,
-  ...someSubs
-];
-
 function saccSub(
   step: number,
   [[targetQty, targetPOD, targetPAC]]: [Triple<number, number, number>],
@@ -26,7 +21,8 @@ function saccSub(
   const calculatedOptions = calculateSubstitutionOptions(
     targetQty,
     [targetPOD, subs.map(snd)],
-    [targetPAC, subs.map(thrd)]
+    [targetPAC, subs.map(thrd)],
+    step
   );
   return calculatedOptions
     ? calculatedOptions.reduce(formatReturnList(subs, targetQty), [])
