@@ -57,7 +57,7 @@ function SACCHARIDEPAIRSTABLE(
       [subName1, ...subOptions[subName1]] as subOption,
       [subName2, ...subOptions[subName2]] as subOption
     ])
-  );
+  ).map((sub, i) => [substitutions[i][0], sub]);
 }
 
 /**
