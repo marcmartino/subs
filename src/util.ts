@@ -21,3 +21,5 @@ export const flatMap = <T, U>(xs: T[], func: (x: T) => U[]): U[] =>
 
 export const fromEntries = <T>(xs: [string, ][]) =>
   xs.reduce((obj, [prop, ...val]) => ({ ...obj, [prop]: val }));
+
+export const get = (prop: string) => <T>(obj: {[key: string]: T}): T => obj[prop];

@@ -10,8 +10,7 @@ type subOption = Triple<string, number, number>;
 import { snd, thrd, frst } from "./util";
 import { listPermutations } from "./permutations";
 import { calculateSubstitutionOptions } from "./equations";
-import { flatten } from "./util";
-import { stringify } from "querystring";
+import { flatten, get } from "./util";
 
 const formatReturnList = (subs: subOption[], targetQty: number) => (
   namedOptions: string[],
@@ -97,10 +96,12 @@ export function SACCHARIDEPAIRSTABLE(
 }
 
 const subCollectionToTable = (
-  subNames: string[],
+  sacchNames: string[],
   subs: { [saccharideName: string]: number }[]
-): string[][] => {
-  return [[]];
+): (string | number)[][] => {
+  return sacchNames.map((name) => [
+    name, ...subs.map(get(name)).map((val) => val || "-")
+  ])
 };
 
 /**
