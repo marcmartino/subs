@@ -7,10 +7,11 @@ type sumProduct = weight[];
 type equation = Tuple<weight, sumProduct>;
 type subOption = Triple<string, number, number>;
 
-import { snd, thrd } from "./util";
+import { snd, thrd, frst } from "./util";
 import { listPermutations } from "./permutations";
 import { calculateSubstitutionOptions } from "./equations";
-import { flatten, fromEntries } from "./util";
+import { flatten } from "./util";
+import { stringify } from "querystring";
 
 const formatReturnList = (subs: subOption[], targetQty: number) => (
   namedOptions: string[],
@@ -47,10 +48,10 @@ function saccSub(
  * @customfunction
  */
 export function SACCHARIDEPAIRSTABLE(
-  targets: [Triple<number, number, number>],
+  [targets]: [Triple<number, number, number>],
   substitutions: subOption[]
 ) {
-  const [[targetQty, targetPOD, targetPAC]] = targets;
+  const [targetQty, targetPOD, targetPAC] = targets;
   const subOptions: {
     [substitutionName: string]: Tuple<number, number>;
   } = substitutions.reduce(
@@ -60,15 +61,37 @@ export function SACCHARIDEPAIRSTABLE(
     }),
     {}
   );
-  const subsCollection = fromEntries(listPermutations(2, Object.keys(subOptions))
-    .map(([subName1, subName2]) =>
-      SACCHARIDESUBTENTHS(targets, [
-        [subName1, ...subOptions[subName1]] as subOption,
-        [subName2, ...subOptions[subName2]] as subOption
-      ])
+  
+  const subsCollection: {[saccharideName: string]: number}[] = listPermutations(2, Object.keys(subOptions))
+    .map(subNames =>
+      subNames.map(
+        (subName): Triple<string, number, number> => [
+          subName,
+          subOptions[subName][0],
+          subOptions[subName][1]
+        ]
+      )
     )
-    .filter(sub => sub[0] !== "No Substitutions Found"));
-    return subsCollection.map((sub, i) => [substitutions[i][0], sub]);
+    .map((perms: Triple<string, number, number>[]) => {
+      const option = calculateSubstitutionOptions(
+        targetQty,
+        [targetPOD, perms.map(snd)],
+        [targetPAC, perms.map(thrd)],
+        0.01
+      );
+      if (option)
+        return option.reduce(
+          (optionsObj: {}, qty: number, i) => ({
+            ...optionsObj,
+            [frst(perms[i])]: qty * targetQty
+          }),
+          {}
+        );
+      return false;
+    })
+    .filter(opt => opt);
+
+    return subCollectionToTable(subsCollection);
 }
 
 /**
