@@ -61,8 +61,10 @@ export function SACCHARIDEPAIRSTABLE(
     }),
     {}
   );
-  
-  const subsCollection: {[saccharideName: string]: number}[] = listPermutations(2, Object.keys(subOptions))
+
+  const subsCollection: {
+    [saccharideName: string]: number;
+  }[] = listPermutations(2, Object.keys(subOptions))
     .map(subNames =>
       subNames.map(
         (subName): Triple<string, number, number> => [
@@ -81,7 +83,7 @@ export function SACCHARIDEPAIRSTABLE(
       );
       if (option)
         return option.reduce(
-          (optionsObj: {}, qty: number, i) => ({
+          (optionsObj, qty, i) => ({
             ...optionsObj,
             [frst(perms[i])]: qty * targetQty
           }),
@@ -91,8 +93,15 @@ export function SACCHARIDEPAIRSTABLE(
     })
     .filter(opt => opt);
 
-    return subCollectionToTable(subsCollection);
+  return subCollectionToTable(Object.keys(subOptions), subsCollection);
 }
+
+const subCollectionToTable = (
+  subNames: string[],
+  subs: { [saccharideName: string]: number }[]
+): string[][] => {
+  return [[]];
+};
 
 /**
  * Finds a saccharide substitution with 1/2 accuracy
