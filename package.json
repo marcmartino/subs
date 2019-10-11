@@ -1,12 +1,16 @@
 {
   "name": "subs",
   "version": "1.0.0",
-  "description": "",
+  "description": "Library for calculating saccharide blend substitutions",
   "main": "index.ts",
   "scripts": {
     "test": "mocha -r ts-node/register src/**/*.test.ts",
     "build:sheets": "webpack",
     "dev": ""
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/marcmartino/subs"
   },
   "author": "",
   "license": "ISC",
@@ -15,15 +19,12 @@
     "@types/mocha": "^5.2.7",
     "chai": "^4.2.0",
     "mocha": "^6.2.0",
-    "nyc": "^14.1.1",
     "source-map-loader": "^0.2.4",
     "ts-loader": "^6.2.0",
     "ts-node": "^8.4.1",
     "typescript": "^3.6.3",
     "webpack": "^4.41.0",
-    "webpack-cli": "^3.3.9"
-  },
-  "dependencies": {
+    "webpack-cli": "^3.3.9",
     "@types/node": "^12.7.7"
   }
 }
