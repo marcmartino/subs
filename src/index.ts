@@ -65,7 +65,7 @@ export function SACCHARIDEPAIRSTABLE(
     [saccharideName: string]: number;
   }[] = [
     ...listPermutations(2, Object.keys(subOptions)),
-    ...listPermutations(3, Object.keys(subOptions))
+    ...listPermutations(3, Object.keys(subOptions)).slice(0, Object.keys(subOptions).length)
   ]
     .map(subNames =>
       subNames.map(
