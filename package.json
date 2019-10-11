@@ -1,5 +1,5 @@
 {
-  "name": "subs",
+  "name": "@marcmartino/subs",
   "version": "1.0.0",
   "description": "Library for calculating saccharide blend substitutions",
   "main": "index.ts",
@@ -10,9 +10,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/marcmartino/subs"
+    "url": "git+https://github.com/marcmartino/subs.git"
   },
-  "author": "",
+  "author": "Marc Martino",
   "license": "ISC",
   "devDependencies": {
     "@types/chai": "^4.2.3",
@@ -26,5 +26,13 @@
     "webpack": "^4.41.0",
     "webpack-cli": "^3.3.9",
     "@types/node": "^12.7.7"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/marcmartino/subs/issues"
+  },
+  "homepage": "https://github.com/marcmartino/subs#readme",
+  "directories": {
+    "doc": "docs"
+  },
+  "dependencies": {}
 }
