@@ -10,7 +10,7 @@ type subOption = Triple<string, number, number>;
 import { snd, thrd, frst } from "./util";
 import { listPermutations } from "./permutations";
 import { calculateSubstitutionOptions } from "./equations";
-import { flatten, get } from "./util";
+import { flatten, get, existsInCollection } from "./util";
 
 const formatReturnList = (subs: subOption[], targetQty: number) => (
   namedOptions: string[],
@@ -63,7 +63,10 @@ export function SACCHARIDEPAIRSTABLE(
 
   const subsCollection: {
     [saccharideName: string]: number;
-  }[] = listPermutations(2, Object.keys(subOptions))
+  }[] = [
+    ...listPermutations(2, Object.keys(subOptions)),
+    ...listPermutations(3, Object.keys(subOptions))
+  ]
     .map(subNames =>
       subNames.map(
         (subName): Triple<string, number, number> => [
@@ -84,13 +87,18 @@ export function SACCHARIDEPAIRSTABLE(
         return option.reduce(
           (optionsObj, qty, i) => ({
             ...optionsObj,
-            [frst(perms[i])]: qty * targetQty
+            [frst(perms[i])]: parseFloat((qty * targetQty).toFixed(2))
           }),
           {}
         );
       return false;
     })
-    .filter(opt => opt);
+    .filter(opt => opt)
+    .reduce(
+      (collection: {}[], sub: {}) =>
+        existsInCollection(collection, sub) ? collection : [...collection, sub],
+      []
+    );
 
   return subCollectionToTable(Object.keys(subOptions), subsCollection);
 }
@@ -98,11 +106,14 @@ export function SACCHARIDEPAIRSTABLE(
 const subCollectionToTable = (
   sacchNames: string[],
   subs: { [saccharideName: string]: number }[]
-): (string | number)[][] => {
-  return sacchNames.map((name) => [
-    name, ...subs.map(get(name)).map((val) => val || "-")
+): (string | number)[][] => [
+  ["", ...Object.keys(subs).map(i => `Option #${parseInt(i, 10) + 1}`),   ""],
+  ...sacchNames.map(name => [
+    name,
+    ...subs.map(get(name)).map(val => val || 0.0),
+    name
   ])
-};
+];
 
 /**
  * Finds a saccharide substitution with 1/2 accuracy

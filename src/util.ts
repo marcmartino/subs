@@ -18,8 +18,20 @@ export const flatten = <T>(xs: T[][]) =>
   );
 export const flatMap = <T, U>(xs: T[], func: (x: T) => U[]): U[] =>
   flatten(xs.map(func));
-
-export const fromEntries = <T>(xs: [string, ][]) =>
+export const fromEntries = <T>(xs: [string][]) =>
   xs.reduce((obj, [prop, ...val]) => ({ ...obj, [prop]: val }));
-
-export const get = (prop: string) => <T>(obj: {[key: string]: T}): T => obj[prop];
+export const get = (prop: string) => <T>(obj: { [key: string]: T }): T =>
+  obj[prop];
+export const identicalObjs = <T>(
+  x: { [key: string]: T },
+  y: { [key: string]: T }
+) => {
+  const xPairs = Object.entries(x);
+  return xPairs.length !== Object.keys(y).length
+    ? false
+    : xPairs.reduce((bool, [key, val]) => bool || y[key] === val, false);
+};
+export const existsInCollection = <T>(
+  xs: { [key: string]: T }[],
+  y: { [key: string]: T }
+) => xs.reduce((bool, x) => bool || identicalObjs(x, y), false);
