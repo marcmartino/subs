@@ -1,7 +1,7 @@
 const path = require('path');
 
-module.exports = {
-  entry: './src/index.ts',
+var config = {
+
   module: {
     rules: [
       {
@@ -12,10 +12,44 @@ module.exports = {
     ],
   },
   resolve: {
-    extensions: [ '.tsx', '.ts', '.js' ],
+    extensions: ['.tsx', '.ts'],
   },
-  output: {
-    filename: 'index.js',
-    path: path.resolve(__dirname, 'dist'),
-  },
+  optimization: {}
+
+};
+
+module.exports = module.exports = (env, argv) => {
+
+  if (argv.type === 'sheets') {
+    config.mode = "none"
+    config.entry = './src/sheets.entry.ts'
+    config.output = {
+      // library: 'sub',
+      // libraryTarget: 'var',
+      filename: 'index.js',
+      path: path.resolve(__dirname, 'dist/sheets'),
+    }
+    config.target = "web"
+    config.optimization.minimize = false
+    config.module.rules = [...config.module.rules,
+    {
+      test: /sheets.entry/g,
+      use: ('exports-loader?SACCHARIDEPAIRSTABLE')
+    }]
+  }
+
+  if (argv.type === 'module') {
+    config.mode = "production"
+    config.entry = './src/index.ts'
+    config.output = {
+      library: 'subs',
+      libraryTarget: 'umd',
+      umdNamedDefine: true,
+      globalObject: 'this',
+      filename: 'subs.js',
+      path: path.resolve(__dirname, 'dist'),
+    }
+  }
+
+  return config;
 };

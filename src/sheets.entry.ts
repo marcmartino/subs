@@ -1,10 +1,6 @@
 type Tuple<A, B> = [A, B];
 type Triple<A, B, C> = [A, B, C];
-type anyTriple = Triple<any, any, any>;
 
-type weight = number;
-type sumProduct = weight[];
-type equation = Tuple<weight, sumProduct>;
 type subOption = Triple<string, number, number>;
 
 import { snd, thrd, frst } from "./util";
@@ -18,7 +14,7 @@ const formatReturnList = (subs: subOption[], targetQty: number) => (
   i: number
 ): string[] => [
   ...namedOptions,
-  `${subs[i][0]}: ${parseFloat((calcQty * targetQty).toFixed(2))}`
+  `${subs[i][0]}: ${parseFloat((calcQty * targetQty).toFixed(2))}`,
 ];
 
 function saccSub(
@@ -44,7 +40,10 @@ function saccSub(
  * @param {Triple<number, number, number>} targets Target qty, pod/sweetness, freezing point depression/pac.
  * @param {subOption[][]} substitution_options list of triples denoting the options suited for substitutions
  * @return {string[]} either a list representing the found substitution, or a single that says no substitutions found
+ * @name SACCHARIDEPAIRSTABLE
  * @customfunction
+ * @preserve
+ * @global
  */
 export function SACCHARIDEPAIRSTABLE(
   [targets]: [Triple<number, number, number>],
@@ -56,7 +55,7 @@ export function SACCHARIDEPAIRSTABLE(
   } = substitutions.reduce(
     (allOptions, [subName, ...subVals]) => ({
       ...allOptions,
-      [subName]: subVals
+      [subName]: subVals,
     }),
     {}
   );
@@ -65,14 +64,17 @@ export function SACCHARIDEPAIRSTABLE(
     [saccharideName: string]: number;
   }[] = [
     ...listPermutations(2, Object.keys(subOptions)),
-    ...listPermutations(3, Object.keys(subOptions)).slice(0, Object.keys(subOptions).length)
+    ...listPermutations(3, Object.keys(subOptions)).slice(
+      0,
+      Object.keys(subOptions).length
+    ),
   ]
-    .map(subNames =>
+    .map((subNames) =>
       subNames.map(
         (subName): Triple<string, number, number> => [
           subName,
           subOptions[subName][0],
-          subOptions[subName][1]
+          subOptions[subName][1],
         ]
       )
     )
@@ -87,13 +89,13 @@ export function SACCHARIDEPAIRSTABLE(
         return option.reduce(
           (optionsObj, qty, i) => ({
             ...optionsObj,
-            [frst(perms[i])]: parseFloat((qty * targetQty).toFixed(2))
+            [frst(perms[i])]: parseFloat((qty * targetQty).toFixed(2)),
           }),
           {}
         );
       return false;
     })
-    .filter(opt => opt)
+    .filter((opt) => opt)
     .reduce(
       (collection: {}[], sub: {}) =>
         existsInCollection(collection, sub) ? collection : [...collection, sub],
@@ -107,12 +109,12 @@ const subCollectionToTable = (
   sacchNames: string[],
   subs: { [saccharideName: string]: number }[]
 ): (string | number)[][] => [
-  ["", ...Object.keys(subs).map(i => `Option #${parseInt(i, 10) + 1}`),   ""],
-  ...sacchNames.map(name => [
+  ["", ...Object.keys(subs).map((i) => `Option #${parseInt(i, 10) + 1}`), ""],
+  ...sacchNames.map((name) => [
     name,
-    ...subs.map(get(name)).map(val => val || 0.0),
-    name
-  ])
+    ...subs.map(get(name)).map((val) => val || 0.0),
+    name,
+  ]),
 ];
 
 /**
@@ -121,7 +123,7 @@ const subCollectionToTable = (
  * @param {Triple<number, number, number>} targets Target qty, pod/sweetness, freezing point depression/pac.
  * @param {subOption[][]} substitution_options list of triples denoting the options suited for substitutions
  * @return {string[]} either a list representing the found substitution, or a single that says no substitutions found
- * @customfunction
+ * @customfunctionf
  */
 function SACCHARIDESUBHALVES(
   targets: [Triple<number, number, number>],
