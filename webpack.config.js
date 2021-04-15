@@ -24,8 +24,6 @@ module.exports = module.exports = (env, argv) => {
     config.mode = "none"
     config.entry = './src/sheets.entry.ts'
     config.output = {
-      // library: 'sub',
-      // libraryTarget: 'var',
       filename: 'index.js',
       path: path.resolve(__dirname, 'dist/sheets'),
     }
@@ -40,12 +38,11 @@ module.exports = module.exports = (env, argv) => {
 
   if (argv.type === 'module') {
     config.mode = "production"
-    config.entry = './src/index.ts'
+    config.entry = [
+      './src/equations.ts',
+      './src/permutations.ts'
+    ]
     config.output = {
-      library: 'subs',
-      libraryTarget: 'umd',
-      umdNamedDefine: true,
-      globalObject: 'this',
       filename: 'subs.js',
       path: path.resolve(__dirname, 'dist'),
     }

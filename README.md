@@ -6,14 +6,14 @@ Typescript module to generate possible saccharide substitution combinations for 
 
 1. `yarn install @marcmartino/subs` to utilize the module in code
 
-   *  ([Interactive demo on Runkit](https://npm.runkit.com/%40marcmartino%2Fsubs))
+   - ([Interactive demo on Runkit](https://npm.runkit.com/%40marcmartino%2Fsubs))
 
-   * `calculateSubstitutionOptions`
+   - `calculateSubstitutionOptions`
 
      ```js
      /**
       * calculates an option that will have the supplied pod and pac given the equations or returns false if no options are found
-      * 
+      *
       * @param {number} totalMass given weight of the original blend
       * @param {number, number[]} pod sweetness goal and linear eq to use as the restraint
       * @param {nubmer, number[]} pac freezing point depression goal and the linear eq to use as a restraint
@@ -22,23 +22,23 @@ Typescript module to generate possible saccharide substitution combinations for 
       */
      ```
 
-   * `listPermutations`
+   - `listPermutations`
 
-      ```js
-      /**
+     ```js
+     /**
       * finds unique combinations of values specific to the busines logic of the sub module
-      * 
+      *
       * @param {number} len number of items that should be combined in the permutation
       * @param {T[]} options list of items to generate permutations from
       * @returns {T[][]} List of groupings
       */
-      ```
+     ```
 
 2. `yarn build:sheets` to generate a standalone js file that can be pasted into the google sheets `Script Editor` to add the custom formula into a spreadsheet
 
-   * ([Interactive sheets demo](https://docs.google.com/spreadsheets/d/1YPnoKZiUxotc0c5Pvlh2w6eQc8SvpK47ZOiENDWlHn8/edit?usp=sharing))
+   - ([Interactive sheets demo](https://docs.google.com/spreadsheets/d/1YPnoKZiUxotc0c5Pvlh2w6eQc8SvpK47ZOiENDWlHn8/edit?usp=sharing))
 
-   * `SACCHARIDEPAIRSTABLE`
+   - `SACCHARIDEPAIRSTABLE`
 
      ```js
      /**
@@ -51,13 +51,4 @@ Typescript module to generate possible saccharide substitution combinations for 
       */
      ```
 
-   * ![Formula use screenshot](Z:\home\marmar\sites\subs\public\sheets.png)
-
-   
-
-   
-
-
-
-
-
+   - ![Formula use screenshot](public\sheets.png)
