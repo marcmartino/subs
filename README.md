@@ -51,4 +51,4 @@ Typescript module to generate possible saccharide substitution combinations for 
       */
      ```
 
-   - ![Formula use screenshot](public\sheets.png)
+   - ![Formula use screenshot](public/sheets.png)
