@@ -24,7 +24,7 @@
     "@types/node": "^12.7.7",
     "chai": "^4.2.0",
     "expose-loader": "^1.0.3",
-    "mocha": "^6.2.0",
+    "mocha": "^10.2.0",
     "source-map-loader": "^0.2.4",
     "ts-loader": "^6.2.0",
     "ts-node": "^8.4.1",
